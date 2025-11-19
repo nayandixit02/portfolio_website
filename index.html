@@ -44,23 +44,6 @@
         background-size: cover;
         background-position: center;
       }
-
-      /* allow touch/drag to pass through slider overlays */
-      .home-slider .slider-item .overlay,
-      .hero .overlay,
-      .home-slider .overlay {
-        pointer-events: none;
-      }
-
-      /* let the browser route vertical scrolling while allowing horizontal swipes for the carousel */
-      .home-slider,
-      .home-slider .owl-stage,
-      .home-slider .owl-stage-outer,
-      .owl-carousel {
-        touch-action: pan-y;
-        -ms-touch-action: pan-y;
-        -webkit-user-drag: none;
-      }
     </style>
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -962,99 +945,6 @@
     <script src="js/jquery.animateNumber.min.js"></script>
     <script src="js/scrollax.min.js"></script>
 
-    <script>
-      (function ($) {
-        $(document).ready(function () {
-          if ($.fn.owlCarousel) {
-            $(".home-slider").owlCarousel({
-              items: 1,
-              loop: true,
-              autoplay: false,
-              smartSpeed: 700,
-              animateOut: "fadeOut",
-              dots: true,
-              nav: false,
-              mouseDrag: true,
-              touchDrag: true,
-              pullDrag: true,
-              responsive: {
-                0: { items: 1 },
-                600: { items: 1 },
-                1000: { items: 1 },
-              },
-            });
-          }
-        });
-      })(jQuery);
-    </script>
-
     <script src="js/main.js"></script>
-
-    <style>
-      /* ensure vertical swipes scroll the page when touching the hero/slider */
-      .hero,
-      .home-slider,
-      .home-slider .owl-stage-outer,
-      .home-slider .owl-stage {
-        touch-action: pan-y !important;
-        -ms-touch-action: pan-y !important;
-      }
-    </style>
-
-    <script>
-      (function () {
-        var isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-        if (!isTouch) return;
-
-        // disable Stellar/Scrollax behaviors on touch devices if they exist
-        try {
-          if (window.jQuery) {
-            if ($.fn.stellar && typeof $(window).stellar === "function") {
-              try {
-                $(window).stellar("destroy");
-              } catch (e) {}
-            }
-          }
-        } catch (e) {}
-
-        // remove Scrollax attributes so Scrollax won't intercept touch (if library doesn't expose destroy)
-        try {
-          document
-            .querySelectorAll("[data-scrollax-parent], [data-scrollax]")
-            .forEach(function (el) {
-              el.removeAttribute("data-scrollax-parent");
-              el.removeAttribute("data-scrollax");
-            });
-        } catch (e) {}
-
-        // allow vertical gestures to bypass the carousel: stop propagation of vertical touchmoves
-        var slider = document.querySelector(".home-slider");
-        if (!slider) return;
-        var startX = 0,
-          startY = 0;
-        slider.addEventListener(
-          "touchstart",
-          function (e) {
-            startX = e.touches[0].clientX;
-            startY = e.touches[0].clientY;
-          },
-          { passive: true }
-        );
-
-        slider.addEventListener(
-          "touchmove",
-          function (e) {
-            var dx = Math.abs(e.touches[0].clientX - startX);
-            var dy = Math.abs(e.touches[0].clientY - startY);
-            if (dy > dx) {
-              // vertical swipe: stop propagation so carousel/other libs don't handle it;
-              // do NOT call preventDefault so the browser can scroll the page.
-              e.stopPropagation();
-            }
-          },
-          { passive: true }
-        );
-      })();
-    </script>
   </body>
 </html>
