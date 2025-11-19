@@ -989,5 +989,72 @@
     </script>
 
     <script src="js/main.js"></script>
+
+    <style>
+      /* ensure vertical swipes scroll the page when touching the hero/slider */
+      .hero,
+      .home-slider,
+      .home-slider .owl-stage-outer,
+      .home-slider .owl-stage {
+        touch-action: pan-y !important;
+        -ms-touch-action: pan-y !important;
+      }
+    </style>
+
+    <script>
+      (function () {
+        var isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+        if (!isTouch) return;
+
+        // disable Stellar/Scrollax behaviors on touch devices if they exist
+        try {
+          if (window.jQuery) {
+            if ($.fn.stellar && typeof $(window).stellar === "function") {
+              try {
+                $(window).stellar("destroy");
+              } catch (e) {}
+            }
+          }
+        } catch (e) {}
+
+        // remove Scrollax attributes so Scrollax won't intercept touch (if library doesn't expose destroy)
+        try {
+          document
+            .querySelectorAll("[data-scrollax-parent], [data-scrollax]")
+            .forEach(function (el) {
+              el.removeAttribute("data-scrollax-parent");
+              el.removeAttribute("data-scrollax");
+            });
+        } catch (e) {}
+
+        // allow vertical gestures to bypass the carousel: stop propagation of vertical touchmoves
+        var slider = document.querySelector(".home-slider");
+        if (!slider) return;
+        var startX = 0,
+          startY = 0;
+        slider.addEventListener(
+          "touchstart",
+          function (e) {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+          },
+          { passive: true }
+        );
+
+        slider.addEventListener(
+          "touchmove",
+          function (e) {
+            var dx = Math.abs(e.touches[0].clientX - startX);
+            var dy = Math.abs(e.touches[0].clientY - startY);
+            if (dy > dx) {
+              // vertical swipe: stop propagation so carousel/other libs don't handle it;
+              // do NOT call preventDefault so the browser can scroll the page.
+              e.stopPropagation();
+            }
+          },
+          { passive: true }
+        );
+      })();
+    </script>
   </body>
 </html>
