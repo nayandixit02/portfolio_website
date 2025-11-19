@@ -45,10 +45,21 @@
         background-position: center;
       }
 
-      /* allow touch/drag to pass through overlay */
+      /* allow touch/drag to pass through slider overlays */
       .home-slider .slider-item .overlay,
-      .hero .overlay {
+      .hero .overlay,
+      .home-slider .overlay {
         pointer-events: none;
+      }
+
+      /* let the browser route vertical scrolling while allowing horizontal swipes for the carousel */
+      .home-slider,
+      .home-slider .owl-stage,
+      .home-slider .owl-stage-outer,
+      .owl-carousel {
+        touch-action: pan-y;
+        -ms-touch-action: pan-y;
+        -webkit-user-drag: none;
       }
     </style>
   </head>
