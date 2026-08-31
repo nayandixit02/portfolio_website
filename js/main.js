@@ -84,27 +84,52 @@
 	
 
 	var carousel = function() {
-		$('.home-slider').owlCarousel({
-	    loop:true,
-	    autoplay: true,
-	    margin:0,
-	    animateOut: 'fadeOut',
-	    animateIn: 'fadeIn',
-	    nav:false,
-	    autoplayHoverPause: false,
-	    items: 1,
-	    navText : ["<span class='ion-md-arrow-back'></span>","<span class='ion-chevron-right'></span>"],
-	    responsive:{
-	      0:{
-	        items:1
-	      },
-	      600:{
-	        items:1
-	      },
-	      1000:{
-	        items:1
-	      }
-	    }
+		var $homeSlider = $('.home-slider');
+		$homeSlider.owlCarousel({
+			loop: true,
+			autoplay: true,
+			margin: 0,
+			animateOut: 'fadeOut',
+			animateIn: 'fadeIn',
+			nav: false,
+			autoplayHoverPause: false,
+			items: 1,
+			mouseDrag: false,
+			touchDrag: false,
+			pullDrag: false,
+			freeDrag: false,
+			navText: ["<span class='ion-md-arrow-back'></span>","<span class='ion-chevron-right'></span>"],
+			responsive: {
+				0: { items: 1 },
+				600: { items: 1 },
+				1000: { items: 1 }
+			}
+		});
+
+		// Passive touch handling: allow horizontal swiping between slides without blocking vertical page scroll
+		var touchStartX = 0;
+		var touchStartY = 0;
+		$homeSlider.on('touchstart', function(e) {
+			var touch = (e.originalEvent.touches && e.originalEvent.touches[0]) || (e.originalEvent.changedTouches && e.originalEvent.changedTouches[0]);
+			if (touch) {
+				touchStartX = touch.pageX;
+				touchStartY = touch.pageY;
+			}
+		});
+
+		$homeSlider.on('touchend', function(e) {
+			var touch = (e.originalEvent.changedTouches && e.originalEvent.changedTouches[0]) || (e.originalEvent.touches && e.originalEvent.touches[0]);
+			if (touch) {
+				var diffX = touch.pageX - touchStartX;
+				var diffY = touch.pageY - touchStartY;
+				if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY) * 1.5) {
+					if (diffX < 0) {
+						$homeSlider.trigger('next.owl.carousel');
+					} else {
+						$homeSlider.trigger('prev.owl.carousel');
+					}
+				}
+			}
 		});
 	};
 	carousel();

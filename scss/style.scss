@@ -642,6 +642,10 @@ h1, h2, h3, h4, h5,
 				}
 			}
 		}
+		&, .owl-stage, .owl-stage-outer, .owl-item, &.owl-drag .owl-item, .slider-item, .slider-text {
+			touch-action: pan-y !important;
+			-ms-touch-action: pan-y !important;
+		}
 	}
 } 
 
