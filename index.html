@@ -64,6 +64,14 @@
         -ms-touch-action: pan-y !important;
       }
     </style>
+    <script>
+      (function() {
+        var theme = localStorage.getItem('portfolio-theme');
+        if (theme === 'light' || (!theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+          document.documentElement.classList.add('light-theme');
+        }
+      })();
+    </script>
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
     <div class="ambient-glow"></div>
@@ -107,6 +115,19 @@
             </li>
             <li class="nav-item">
               <a href="#contact-section" class="nav-link"><span>Contact</span></a>
+            </li>
+            <li class="nav-item d-flex align-items-center ml-lg-3 my-2 my-lg-0">
+              <button
+                type="button"
+                id="theme-toggle-nav"
+                class="theme-toggle-btn"
+                aria-label="Toggle Light and Dark Theme"
+                title="Toggle Theme"
+              >
+                <span class="theme-icon sun-icon">☀️</span>
+                <span class="theme-icon moon-icon">🌙</span>
+                <span class="theme-toggle-text d-lg-none ml-2">Switch Theme</span>
+              </button>
             </li>
           </ul>
         </div>
@@ -1123,8 +1144,10 @@
                   <span class="char-counter"><span id="message-char-count">0</span> / 1000 characters</span>
                 </div>
 
-                <button type="submit" class="btn-send-message">
-                  <span>Send Message</span>
+                <div id="form-feedback-container" class="form-feedback-container" style="display: none;"></div>
+
+                <button type="submit" id="btn-submit-contact" class="btn-send-message">
+                  <span class="btn-text">Send Message</span>
                   <span class="icon-paper-plane send-icon"></span>
                 </button>
               </form>
@@ -1273,6 +1296,18 @@
         </div>
       </div>
     </footer>
+
+    <!-- Floating Quick Theme Switcher & Back to Top -->
+    <button
+      type="button"
+      id="floating-theme-toggle"
+      class="floating-theme-toggle"
+      aria-label="Toggle Theme"
+      title="Switch Theme"
+    >
+      <span class="theme-icon sun-icon">☀️</span>
+      <span class="theme-icon moon-icon">🌙</span>
+    </button>
 
     <!-- Back to Top Floating Button -->
     <a href="#" class="back-to-top" title="Back to top">

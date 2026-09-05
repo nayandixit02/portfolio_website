@@ -394,6 +394,136 @@
     $('#message-char-count').text(len);
   });
 
+  // 7. Theme Switcher (Dark & Light Mode)
+  function initTheme() {
+    var storedTheme = localStorage.getItem('portfolio-theme');
+    var isLight = storedTheme === 'light' || (!storedTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches);
+    if (isLight) {
+      $('html, body').addClass('light-theme');
+    } else {
+      $('html, body').removeClass('light-theme');
+    }
+  }
+  initTheme();
+
+  function toggleTheme() {
+    var isCurrentlyLight = $('html').hasClass('light-theme') || $('body').hasClass('light-theme');
+    if (isCurrentlyLight) {
+      $('html, body').removeClass('light-theme');
+      localStorage.setItem('portfolio-theme', 'dark');
+    } else {
+      $('html, body').addClass('light-theme');
+      localStorage.setItem('portfolio-theme', 'light');
+    }
+  }
+
+  $('#theme-toggle-nav, #floating-theme-toggle').on('click', function(e) {
+    e.preventDefault();
+    toggleTheme();
+  });
+
+  // 8. Working Asynchronous Contact Form Submission (Formspree AJAX)
+  $('#main-contact-form').on('submit', function(e) {
+    e.preventDefault();
+    var $form = $(this);
+    var $btn = $('#btn-submit-contact');
+    var $feedback = $('#form-feedback-container');
+
+    var name = $.trim($form.find('input[name="name"]').val());
+    var email = $.trim($form.find('input[name="email"]').val());
+    var subject = $.trim($form.find('input[name="subject"]').val());
+    var message = $.trim($form.find('textarea[name="message"]').val());
+
+    // Basic Validation
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!name || !email || !subject || !message) {
+      $feedback.html(
+        '<div class="feedback-card error-card">' +
+          '<div class="feedback-icon">⚠️</div>' +
+          '<h4>Please Complete All Fields</h4>' +
+          '<p>All fields marked with an asterisk (*) are required to send your message.</p>' +
+        '</div>'
+      ).slideDown();
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      $feedback.html(
+        '<div class="feedback-card error-card">' +
+          '<div class="feedback-icon">📧</div>' +
+          '<h4>Invalid Email Address</h4>' +
+          '<p>Please enter a valid email address so I can get back to you.</p>' +
+        '</div>'
+      ).slideDown();
+      return;
+    }
+
+    // Submit state
+    $btn.prop('disabled', true).html('<span class="btn-spinner"></span> Sending Message... 🚀');
+    $feedback.slideUp();
+
+    var formData = new FormData($form[0]);
+
+    fetch($form.attr('action'), {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    .then(function(response) {
+      if (response.ok) {
+        $feedback.html(
+          '<div class="feedback-card success-card">' +
+            '<div class="feedback-icon">🎉</div>' +
+            '<h4>Message Sent Successfully!</h4>' +
+            '<p>Thank you, <strong>' + $('<div>').text(name).html() + '</strong>! Your message regarding <em>"' + $('<div>').text(subject).html() + '"</em> has been received. I\'ll get back to you at <strong>' + $('<div>').text(email).html() + '</strong> within 24 hours.</p>' +
+            '<button type="button" class="btn-feedback-action" id="btn-send-another">Send Another Message</button>' +
+          '</div>'
+        ).slideDown();
+
+        // Reset inputs
+        $form[0].reset();
+        $('#message-char-count').text('0');
+        // Restore default topic chip
+        $('.topic-chip').removeClass('active');
+        $('.topic-chip').first().addClass('active');
+        $('#contact-subject').val($('.topic-chip').first().data('topic'));
+      } else {
+        return response.json().then(function(data) {
+          var errorMsg = (data && data.errors && data.errors.map(function(e) { return e.message; }).join(', ')) || 'Failed to submit form.';
+          throw new Error(errorMsg);
+        });
+      }
+    })
+    .catch(function(err) {
+      $feedback.html(
+        '<div class="feedback-card error-card">' +
+          '<div class="feedback-icon">⚠️</div>' +
+          '<h4>Could Not Send Message</h4>' +
+          '<p>' + (err.message || 'There was an issue transmitting your message.') + '<br>You can reach me directly via email at <a href="mailto:nayandixit1503@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(message) + '">nayandixit1503@gmail.com</a>.</p>' +
+          '<button type="button" class="btn-feedback-action" id="btn-retry-form">Try Again</button>' +
+        '</div>'
+      ).slideDown();
+    })
+    .finally(function() {
+      $btn.prop('disabled', false).html('<span>Send Message</span> <span class="icon-paper-plane send-icon"></span>');
+    });
+  });
+
+  // Handler to clear feedback and send another note
+  $(document).on('click', '#btn-send-another, #btn-retry-form', function() {
+    $('#form-feedback-container').slideUp();
+    $('#contact-message').focus();
+  });
+
+  // 9. Smooth Scroll & Focus on "Get in Touch" / "Hire Me"
+  $('a[href="#contact-section"]').on('click', function() {
+    setTimeout(function() {
+      $('input[name="name"]').focus();
+    }, 700);
+  });
+
 })(jQuery);
 
 
