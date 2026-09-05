@@ -410,9 +410,14 @@
   function initTheme() {
     try {
       var storedTheme = localStorage.getItem('portfolio-theme');
-      var isLight = storedTheme === 'light' || (!storedTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches);
-      applyTheme(isLight ? 'light' : 'dark');
-    } catch(e) {}
+      if (storedTheme === 'light') {
+        applyTheme('light');
+      } else {
+        applyTheme('dark');
+      }
+    } catch(e) {
+      applyTheme('dark');
+    }
   }
   initTheme();
 
