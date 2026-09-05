@@ -9883,15 +9883,19 @@ textarea.form-control {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 18px 20px;
-  display: flex;
-  align-items: center;
+  display: block;
   transition: all 0.3s ease;
+  text-decoration: none !important;
+  color: inherit;
+  cursor: pointer;
 }
 
 .stat-badge-card:hover {
   transform: translateY(-4px);
   border-color: #ffbd39;
   box-shadow: 0 8px 20px rgba(255, 189, 57, 0.15);
+  text-decoration: none !important;
+  color: inherit;
 }
 
 .stat-badge-card .badge-icon {
