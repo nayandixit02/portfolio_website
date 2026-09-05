@@ -66,11 +66,26 @@
     </style>
     <script>
       (function() {
-        var theme = localStorage.getItem('portfolio-theme');
-        if (theme === 'light' || (!theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches)) {
-          document.documentElement.classList.add('light-theme');
-        }
+        try {
+          var theme = localStorage.getItem('portfolio-theme');
+          if (theme === 'light' || (!theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            document.documentElement.classList.add('light-theme');
+          }
+        } catch(e) {}
       })();
+
+      function toggleThemeGlobal() {
+        var isLight = document.documentElement.classList.contains('light-theme') || (document.body && document.body.classList.contains('light-theme'));
+        if (isLight) {
+          document.documentElement.classList.remove('light-theme');
+          if (document.body) document.body.classList.remove('light-theme');
+          try { localStorage.setItem('portfolio-theme', 'dark'); } catch(e) {}
+        } else {
+          document.documentElement.classList.add('light-theme');
+          if (document.body) document.body.classList.add('light-theme');
+          try { localStorage.setItem('portfolio-theme', 'light'); } catch(e) {}
+        }
+      }
     </script>
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -79,19 +94,38 @@
       class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target"
       id="ftco-navbar"
     >
-      <div class="container">
+      <div class="container d-flex align-items-center justify-content-between">
         <a class="navbar-brand" href="index.html">Nayan<span>.</span></a>
-        <button
-          class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle"
-          type="button"
-          data-toggle="collapse"
-          data-target="#ftco-nav"
-          aria-controls="ftco-nav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="oi oi-menu"></span> Menu
-        </button>
+
+        <div class="d-flex align-items-center order-lg-last ml-auto ml-lg-3">
+          <!-- Single Interactive Theme Toggle Switch -->
+          <button
+            type="button"
+            id="theme-toggle"
+            class="theme-toggle-switch"
+            aria-label="Toggle Dark and Light Mode"
+            title="Toggle Dark / Light Theme"
+            onclick="toggleThemeGlobal()"
+          >
+            <span class="switch-track">
+              <span class="switch-icon sun">☀️</span>
+              <span class="switch-icon moon">🌙</span>
+              <span class="switch-thumb"></span>
+            </span>
+          </button>
+
+          <button
+            class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle ml-2"
+            type="button"
+            data-toggle="collapse"
+            data-target="#ftco-nav"
+            aria-controls="ftco-nav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="oi oi-menu"></span> Menu
+          </button>
+        </div>
 
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav nav ml-auto">
@@ -115,19 +149,6 @@
             </li>
             <li class="nav-item">
               <a href="#contact-section" class="nav-link"><span>Contact</span></a>
-            </li>
-            <li class="nav-item d-flex align-items-center ml-lg-3 my-2 my-lg-0">
-              <button
-                type="button"
-                id="theme-toggle-nav"
-                class="theme-toggle-btn"
-                aria-label="Toggle Light and Dark Theme"
-                title="Toggle Theme"
-              >
-                <span class="theme-icon sun-icon">☀️</span>
-                <span class="theme-icon moon-icon">🌙</span>
-                <span class="theme-toggle-text d-lg-none ml-2">Switch Theme</span>
-              </button>
             </li>
           </ul>
         </div>
@@ -1296,18 +1317,6 @@
         </div>
       </div>
     </footer>
-
-    <!-- Floating Quick Theme Switcher & Back to Top -->
-    <button
-      type="button"
-      id="floating-theme-toggle"
-      class="floating-theme-toggle"
-      aria-label="Toggle Theme"
-      title="Switch Theme"
-    >
-      <span class="theme-icon sun-icon">☀️</span>
-      <span class="theme-icon moon-icon">🌙</span>
-    </button>
 
     <!-- Back to Top Floating Button -->
     <a href="#" class="back-to-top" title="Back to top">

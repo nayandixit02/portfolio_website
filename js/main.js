@@ -410,14 +410,14 @@
     var isCurrentlyLight = $('html').hasClass('light-theme') || $('body').hasClass('light-theme');
     if (isCurrentlyLight) {
       $('html, body').removeClass('light-theme');
-      localStorage.setItem('portfolio-theme', 'dark');
+      try { localStorage.setItem('portfolio-theme', 'dark'); } catch(e) {}
     } else {
       $('html, body').addClass('light-theme');
-      localStorage.setItem('portfolio-theme', 'light');
+      try { localStorage.setItem('portfolio-theme', 'light'); } catch(e) {}
     }
   }
 
-  $('#theme-toggle-nav, #floating-theme-toggle').on('click', function(e) {
+  $(document).on('click', '#theme-toggle, .theme-toggle-switch', function(e) {
     e.preventDefault();
     toggleTheme();
   });
