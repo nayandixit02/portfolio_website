@@ -399,17 +399,17 @@
     if (theme === 'light') {
       document.documentElement.classList.add('light-theme');
       if (document.body) document.body.classList.add('light-theme');
-      try { localStorage.setItem('portfolio-theme', 'light'); } catch(e) {}
+      try { localStorage.setItem('portfolio-theme-mode', 'light'); } catch(e) {}
     } else {
       document.documentElement.classList.remove('light-theme');
       if (document.body) document.body.classList.remove('light-theme');
-      try { localStorage.setItem('portfolio-theme', 'dark'); } catch(e) {}
+      try { localStorage.setItem('portfolio-theme-mode', 'dark'); } catch(e) {}
     }
   }
 
   function initTheme() {
     try {
-      var storedTheme = localStorage.getItem('portfolio-theme');
+      var storedTheme = localStorage.getItem('portfolio-theme-mode');
       if (storedTheme === 'light') {
         applyTheme('light');
       } else {
