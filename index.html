@@ -73,19 +73,6 @@
           }
         } catch(e) {}
       })();
-
-      function toggleThemeGlobal() {
-        var isLight = document.documentElement.classList.contains('light-theme') || (document.body && document.body.classList.contains('light-theme'));
-        if (isLight) {
-          document.documentElement.classList.remove('light-theme');
-          if (document.body) document.body.classList.remove('light-theme');
-          try { localStorage.setItem('portfolio-theme', 'dark'); } catch(e) {}
-        } else {
-          document.documentElement.classList.add('light-theme');
-          if (document.body) document.body.classList.add('light-theme');
-          try { localStorage.setItem('portfolio-theme', 'light'); } catch(e) {}
-        }
-      }
     </script>
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -105,7 +92,6 @@
             class="theme-toggle-switch"
             aria-label="Toggle Dark and Light Mode"
             title="Toggle Dark / Light Theme"
-            onclick="toggleThemeGlobal()"
           >
             <span class="switch-track">
               <span class="switch-icon sun">☀️</span>

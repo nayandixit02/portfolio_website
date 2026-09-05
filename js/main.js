@@ -395,31 +395,32 @@
   });
 
   // 7. Theme Switcher (Dark & Light Mode)
-  function initTheme() {
-    var storedTheme = localStorage.getItem('portfolio-theme');
-    var isLight = storedTheme === 'light' || (!storedTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches);
-    if (isLight) {
-      $('html, body').addClass('light-theme');
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      document.documentElement.classList.add('light-theme');
+      if (document.body) document.body.classList.add('light-theme');
+      try { localStorage.setItem('portfolio-theme', 'light'); } catch(e) {}
     } else {
-      $('html, body').removeClass('light-theme');
+      document.documentElement.classList.remove('light-theme');
+      if (document.body) document.body.classList.remove('light-theme');
+      try { localStorage.setItem('portfolio-theme', 'dark'); } catch(e) {}
     }
+  }
+
+  function initTheme() {
+    try {
+      var storedTheme = localStorage.getItem('portfolio-theme');
+      var isLight = storedTheme === 'light' || (!storedTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches);
+      applyTheme(isLight ? 'light' : 'dark');
+    } catch(e) {}
   }
   initTheme();
 
-  function toggleTheme() {
-    var isCurrentlyLight = $('html').hasClass('light-theme') || $('body').hasClass('light-theme');
-    if (isCurrentlyLight) {
-      $('html, body').removeClass('light-theme');
-      try { localStorage.setItem('portfolio-theme', 'dark'); } catch(e) {}
-    } else {
-      $('html, body').addClass('light-theme');
-      try { localStorage.setItem('portfolio-theme', 'light'); } catch(e) {}
-    }
-  }
-
-  $(document).on('click', '#theme-toggle, .theme-toggle-switch', function(e) {
+  $(document).on('click', '#theme-toggle', function(e) {
     e.preventDefault();
-    toggleTheme();
+    e.stopPropagation();
+    var isLight = document.documentElement.classList.contains('light-theme') || (document.body && document.body.classList.contains('light-theme'));
+    applyTheme(isLight ? 'dark' : 'light');
   });
 
   // 8. Working Asynchronous Contact Form Submission (Formspree AJAX)
