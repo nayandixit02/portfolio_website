@@ -66,6 +66,7 @@
     </style>
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+    <div class="ambient-glow"></div>
     <nav
       class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target"
       id="ftco-navbar"
@@ -122,18 +123,45 @@
               data-scrollax-parent="true"
             >
               <div
-                class="one-third js-fullheight order-md-last img"
+                class="one-third js-fullheight order-md-last img hero-image-wrapper"
                 style="background-image: url(images/nayan6.png)"
               >
                 <div class="overlay"></div>
+                <div class="floating-badge badge-hero-1">
+                  <span class="f-icon">⚛️</span>
+                  <div>
+                    <strong>React & MERN</strong>
+                    <small>Full-Stack Core</small>
+                  </div>
+                </div>
+                <div class="floating-badge badge-hero-2">
+                  <span class="f-icon">🏆</span>
+                  <div>
+                    <strong>LeetCode Knight</strong>
+                    <small>Top 6.06% Globally</small>
+                  </div>
+                </div>
+                <div class="floating-badge badge-hero-3">
+                  <span class="f-icon">⚡</span>
+                  <div>
+                    <strong>500+ DSA</strong>
+                    <small>Problem Solver</small>
+                  </div>
+                </div>
               </div>
               <div
                 class="one-forth d-flex align-items-center ftco-animate"
                 data-scrollax=" properties: { translateY: '70%' }"
               >
                 <div class="text">
-                  <span class="subheading">Full-Stack Developer (MERN)</span>
-                  <h1 class="mb-4 mt-3">I'm <span>Nayan Dixit</span></h1>
+                  <div class="status-pill mb-3">
+                    <span class="status-dot"></span> Available for SDE & Full-Stack Roles
+                  </div>
+                  <span class="subheading">Hello! I'm</span>
+                  <h1 class="mb-2 mt-1"><span>Nayan Dixit</span></h1>
+                  <div class="typing-role-wrapper">
+                    <span class="typing-text" id="typed-roles"></span><span class="typing-cursor">|</span>
+                  </div>
                   <h2 class="mb-4">
                     Building scalable web applications, REST APIs & AI solutions backed by strong DSA problem solving.
                   </h2>
@@ -163,18 +191,35 @@
               data-scrollax-parent="true"
             >
               <div
-                class="one-third js-fullheight order-md-last img"
+                class="one-third js-fullheight order-md-last img hero-image-wrapper"
                 style="background-image: url(images/nayan6.png)"
               >
                 <div class="overlay"></div>
+                <div class="floating-badge badge-hero-1">
+                  <span class="f-icon">🚀</span>
+                  <div>
+                    <strong>MERN Stack</strong>
+                    <small>Scalable Web Apps</small>
+                  </div>
+                </div>
+                <div class="floating-badge badge-hero-2">
+                  <span class="f-icon">⭐</span>
+                  <div>
+                    <strong>3★ CodeChef</strong>
+                    <small>1619 Rating</small>
+                  </div>
+                </div>
               </div>
               <div
                 class="one-forth d-flex align-items-center ftco-animate"
                 data-scrollax=" properties: { translateY: '70%' }"
               >
                 <div class="text">
+                  <div class="status-pill mb-3">
+                    <span class="status-dot"></span> Available for SDE & Full-Stack Roles
+                  </div>
                   <span class="subheading">Competitive Programmer & Engineer</span>
-                  <h1 class="mb-4 mt-3">
+                  <h1 class="mb-3 mt-1">
                     Knight @ <span>LeetCode (Top 6%)</span>
                   </h1>
                   <h2 class="mb-4">
@@ -733,7 +778,7 @@
                 </div>
                 <div class="project-actions">
                   <a href="https://chatbot-8y9v.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-project-action live"><i class="icon-external-link"></i> Live Demo</a>
-                  <a href="https://github.com/nayandixit02/Chatbot" target="_blank" rel="noopener noreferrer" class="btn-project-action code"><i class="icon-github"></i> GitHub</a>
+                  <a href="https://github.com/nayandixit02/ChatBot" target="_blank" rel="noopener noreferrer" class="btn-project-action code"><i class="icon-github"></i> GitHub</a>
                 </div>
               </div>
             </div>
@@ -746,7 +791,7 @@
               <div class="project-body">
                 <div>
                   <span class="project-category">Full-Stack MVC Platform</span>
-                  <h3><a href="https://wanderlust-project-3ghq.onrender.com" target="_blank" rel="noopener noreferrer">Exploro (Travel & Rental)</a></h3>
+                  <h3><a href="https://exploro-84hu.onrender.com/" target="_blank" rel="noopener noreferrer">Exploro (Travel & Rental)</a></h3>
                   <p>
                     MVC-based travel listing and vacation rental platform using Node.js, Express.js, MongoDB, EJS, Cloudinary, and Multer. Features server-side rendering, MongoDB indexing, Passport.js authentication, and Joi input validation.
                   </p>
@@ -760,8 +805,8 @@
                   </div>
                 </div>
                 <div class="project-actions">
-                  <a href="https://wanderlust-project-3ghq.onrender.com" target="_blank" rel="noopener noreferrer" class="btn-project-action live"><i class="icon-external-link"></i> Live Demo</a>
-                  <a href="https://github.com/nayandixit02/Wanderlust-project" target="_blank" rel="noopener noreferrer" class="btn-project-action code"><i class="icon-github"></i> GitHub</a>
+                  <a href="https://exploro-84hu.onrender.com/" target="_blank" rel="noopener noreferrer" class="btn-project-action live"><i class="icon-external-link"></i> Live Demo</a>
+                  <a href="https://github.com/nayandixit02/wanderlust" target="_blank" rel="noopener noreferrer" class="btn-project-action code"><i class="icon-github"></i> GitHub</a>
                 </div>
               </div>
             </div>
@@ -1165,6 +1210,11 @@
         </div>
       </div>
     </footer>
+
+    <!-- Back to Top Floating Button -->
+    <a href="#" class="back-to-top" title="Back to top">
+      <span class="oi oi-chevron-top"></span>
+    </a>
 
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen">

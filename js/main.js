@@ -294,9 +294,77 @@
     fixedContentPos: false
   });
 
+  // ==========================================
+  // Modern Dynamic Effects & Micro-Interactions
+  // ==========================================
 
+  // 1. Dynamic Typewriter Effect for Hero
+  var roles = [
+    "Full-Stack Developer (MERN)",
+    "500+ DSA Problem Solver",
+    "Knight @ LeetCode (Top 6%)",
+    "AI Software Evaluator",
+    "B.Tech @ KNIT Sultanpur"
+  ];
+  var roleIdx = 0;
+  var charIdx = 0;
+  var isDeleting = false;
+  var typingSpeed = 100;
 
+  function typeEffect() {
+    var $typed = $('#typed-roles');
+    if (!$typed.length) return;
 
+    var currentRole = roles[roleIdx];
+    if (isDeleting) {
+      $typed.text(currentRole.substring(0, charIdx - 1));
+      charIdx--;
+      typingSpeed = 50;
+    } else {
+      $typed.text(currentRole.substring(0, charIdx + 1));
+      charIdx++;
+      typingSpeed = 110;
+    }
+
+    if (!isDeleting && charIdx === currentRole.length) {
+      typingSpeed = 2000; // Pause at full text
+      isDeleting = true;
+    } else if (isDeleting && charIdx === 0) {
+      isDeleting = false;
+      roleIdx = (roleIdx + 1) % roles.length;
+      typingSpeed = 400; // Pause before new word
+    }
+
+    setTimeout(typeEffect, typingSpeed);
+  }
+  typeEffect();
+
+  // 2. Mouse Cursor Ambient Spotlight Glow
+  $(document).on('mousemove', function(e) {
+    var $glow = $('.ambient-glow');
+    if ($glow.length) {
+      $glow.css({
+        left: e.clientX + 'px',
+        top: e.clientY + 'px'
+      });
+    }
+  });
+
+  // 3. Back to Top Button
+  var $backToTop = $('.back-to-top');
+  $(window).on('scroll', function() {
+    if ($(this).scrollTop() > 400) {
+      $backToTop.addClass('active');
+    } else {
+      $backToTop.removeClass('active');
+    }
+  });
+
+  $backToTop.on('click', function(e) {
+    e.preventDefault();
+    $('html, body').animate({ scrollTop: 0 }, 600);
+  });
 
 })(jQuery);
+
 
