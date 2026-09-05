@@ -365,6 +365,36 @@
     $('html, body').animate({ scrollTop: 0 }, 600);
   });
 
+  // 4. Interactive Topic Chips for Contact Form
+  $('.topic-chip').on('click', function() {
+    var topic = $(this).data('topic') || $(this).text().trim();
+    $('.topic-chip').removeClass('active');
+    $(this).addClass('active');
+    $('#contact-subject').val(topic).trigger('change');
+  });
+
+  // 5. Quick Email Copy to Clipboard
+  $('.quick-email-copy-box').on('click', function() {
+    var email = $(this).data('email') || 'nayandixit1503@gmail.com';
+    navigator.clipboard.writeText(email).then(function() {
+      var $toast = $('.copy-toast');
+      if (!$toast.length) {
+        $toast = $('<div class="copy-toast">Email copied to clipboard! 📋</div>').appendTo('body');
+      }
+      $toast.addClass('show');
+      setTimeout(function() {
+        $toast.removeClass('show');
+      }, 2500);
+    });
+  });
+
+  // 6. Message Character Counter
+  $('#contact-message').on('input', function() {
+    var len = $(this).val().length;
+    $('#message-char-count').text(len);
+  });
+
 })(jQuery);
+
 
 
